@@ -40,6 +40,6 @@ body.light-mode {
   }
 }
 
-.animate-spin-slow {
+.animate-spin-slow { 
   animation: slow-spin 20s linear infinite;
 }
