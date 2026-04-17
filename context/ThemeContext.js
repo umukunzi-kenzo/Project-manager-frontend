@@ -5,7 +5,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   const applyTheme = (dark) => {
@@ -25,7 +25,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("theme");
-    const isDark = saved !== "light"; // default dark
+    const isDark = saved === "dark";
     setIsDarkMode(isDark);
     applyTheme(isDark);
     setIsMounted(true);
@@ -34,13 +34,7 @@ export function ThemeProvider({ children }) {
   const themeClass = (darkClass, lightClass) => (isDarkMode ? darkClass : lightClass);
 
   return (
-    <ThemeContext.Provider value={{
-      isDarkMode,
-      theme: isDarkMode ? "dark" : "light", // FIX: exposed for ThemeToggle.js
-      toggleTheme,
-      themeClass,
-      isMounted,
-    }}>
+    <ThemeContext.Provider value={{ isDarkMode, theme: isDarkMode ? "dark" : "light", toggleTheme, themeClass, isMounted }}>
       {children}
     </ThemeContext.Provider>
   );
